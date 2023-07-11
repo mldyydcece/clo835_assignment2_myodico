@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-pod
+  namespace: webapp
+spec:
+  containers:
+    - name: myodico-webapp
+      image: 967243465572.dkr.ecr.us-east-1.amazonaws.com/myodico-webapp:application-v2.1
+      env:
+        - name: DBPWD
+          value: "db_pass123"
+        - name: DBUSER
+          value: root
+        - name: DBHOST
+          value: "mysql-service.sqldb.svc.cluster.local"
+        - name: DBPORT
+          value: "3306"
+      ports:
+        - containerPort: 8080

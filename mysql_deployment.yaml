@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: sqldb
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: myodico-mysql
+          image: 967243465572.dkr.ecr.us-east-1.amazonaws.com/myodico-mysql:mysql-v5.6
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "db_pass123"
+          ports:
+            - containerPort: 3306

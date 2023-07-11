@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment-v2
+  namespace: employees
+  labels:
+    app: webapp
+    version: v2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapp
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: v2
+    spec:
+      containers:
+        - name: myodico-webapp
+          image: 967243465572.dkr.ecr.us-east-1.amazonaws.com/myodico-webapp:application-v2.2
+          env:
+            - name: DBPWD
+              value: "db_pass123"
+            - name: DBUSER
+              value: root
+            - name: DBHOST
+              value: "mysql-service.sqldb.svc.cluster.local"
+            - name: DBPORT
+              value: "3306"
+          ports:
+            - containerPort: 8080
